@@ -8,7 +8,6 @@ public class InGameLogic : MonoBehaviour
     [SerializeField]
     EnemyBoneCast enemy;
 
-
     public void ThrowBones(Fsm fsm)
     {
         StartCoroutine(Cast(fsm));
@@ -16,9 +15,9 @@ public class InGameLogic : MonoBehaviour
 
     private IEnumerator Cast(Fsm fsm)
     {
-        player.Cast();
+        player.ThrowBones();
         yield return new WaitForSeconds(5);
-        enemy.Cast();
+        enemy.ThrowBones();
         yield return new WaitForSeconds(5);
         fsm.NextState();
     }

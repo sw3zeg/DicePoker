@@ -64,7 +64,6 @@
     <Compile Include="Assets\Scripts\FSM\FsmState_ResultsMenu.cs" />
     <Compile Include="Assets\Scripts\BoneDownController.cs" />
     <Compile Include="Assets\Scripts\EnemyBoneCast.cs" />
-    <Compile Include="Assets\Scripts\BoneSelection.cs" />
     <Compile Include="Assets\Scripts\FSM\FsmState_StartMenu.cs" />
     <Compile Include="Assets\Scripts\Bone.cs" />
     <Compile Include="Assets\Scripts\FSM\FsmState_InGame.cs" />

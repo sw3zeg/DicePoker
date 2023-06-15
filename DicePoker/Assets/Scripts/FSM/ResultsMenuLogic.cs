@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using static BoneCast;
@@ -9,11 +7,11 @@ public class ResultsMenuLogic : MonoBehaviour
     [SerializeField]
     private GameObject menu;
     [SerializeField]
-    PlayerBoneCast player;
+    private PlayerBoneCast player;
     [SerializeField]
-    EnemyBoneCast enemy;
+    private EnemyBoneCast enemy;
     [SerializeField]
-    TMP_Text resultTxt;
+    private TMP_Text resultTxt;
 
     public void EnableMenu()
     {

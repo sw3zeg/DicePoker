@@ -9,19 +9,15 @@ public class FsmLogic : MonoBehaviour
     [SerializeField]
     private InGameLogic inGameLogic;
 
-
-
     private Fsm fsm = new Fsm();
 
-    private void Start()
+    private void Awake()
     {
         fsm.AddState(new FsmState_StartMenu(fsm, startMenuLogic));
         fsm.AddState(new FsmState_InGame(fsm, inGameLogic));
         fsm.AddState(new FsmState_ResultsMenu(fsm, resultsMenuLogic));
         fsm.Initialize();
     }
-
-
 
     public void NextGameState()
     {

@@ -7,60 +7,66 @@ using UnityEngine;
 public abstract class BoneCast : MonoBehaviour
 {
     [SerializeField]
-    private List<Bone> bones = new List<Bone>();
+    internal List<Bone> bones = new List<Bone>();
     [SerializeField]
-    private List<Transform> spawnPoints = new List<Transform>();
+    internal List<Transform> spawnPoints = new List<Transform>();
     [SerializeField]
-    private List<Transform> defaultPoints = new List<Transform>();
+    internal List<Transform> defaultPoints = new List<Transform>();
 
     private List<int> dice = new List<int>();
     public PokerHand hand;
 
-    private void Start()
-    {
-        MoveToDefaultPoints();
-    }
-
-    public void Cast()
+    public void ThrowBones()
     {
         StartCoroutine(IBoneCast());
     }
 
     private IEnumerator IBoneCast()
     {
-        dice = new List<int>();
-        CastBone();
-        yield return new WaitForSeconds(4);
-        AddNums();
-        Calc();
+        ThrowBone();
+        yield return new WaitForSeconds(5);
+        AddBones();
+        CalcResult();
     }
 
-    private void CastBone()
+    private void ThrowBone()
     {
+        dice = new List<int>();
         MoveToSpawnPoints();
         Rotate();
     }
 
-    private void Calc()
+    private void CalcResult()
     {
         hand = CalculatePokerHand();
         MoveToDefaultPoints();
     }
 
 
-
-
-
-    public enum PokerHand
+    private void MoveToDefaultPoints()
     {
-        None,
-        OnePair,
-        TwoPairs,
-        ThreeOfAKind,
-        FullHouse,
-        FourOfAKind,
-        FiveOfAKind
+        for (int i = 0; i < 5; i++)
+            bones[i].gameObject.transform.position = defaultPoints[i].position;
     }
+
+    private void MoveToSpawnPoints()
+    {
+        for (int i = 0; i < 5; i++)
+            bones[i].gameObject.transform.position = spawnPoints[i].position;
+    }
+
+    private void AddBones()
+    {
+        for (int i = 0; i < 5; i++)
+            dice.Add(bones[i].boneNum);
+    }
+
+    private void Rotate()
+    {
+        for (int i = 0; i < 5; i++)
+            bones[i].Rotate();
+    }
+
 
     public PokerHand CalculatePokerHand()
     {
@@ -100,33 +106,14 @@ public abstract class BoneCast : MonoBehaviour
         throw new ArgumentException("Invalid dice combination.");
     }
 
-
-
-
-
-
-    private void MoveToDefaultPoints()
+    public enum PokerHand
     {
-        for (int i = 0; i < 5; i++)
-            bones[i].gameObject.transform.position = defaultPoints[i].position;
-    }
-
-    private void MoveToSpawnPoints()
-    {
-        for (int i = 0; i < 5; i++)
-            bones[i].gameObject.transform.position = spawnPoints[i].position;
-    }
-
-
-    private void AddNums()
-    {
-        for (int i = 0; i < 5; i++)
-            dice.Add(bones[i].boneNum);
-    }
-
-    private void Rotate()
-    {
-        for (int i = 0; i < 5; i++)
-            bones[i].Rotate();
+        None,
+        OnePair,
+        TwoPairs,
+        ThreeOfAKind,
+        FullHouse,
+        FourOfAKind,
+        FiveOfAKind
     }
 }

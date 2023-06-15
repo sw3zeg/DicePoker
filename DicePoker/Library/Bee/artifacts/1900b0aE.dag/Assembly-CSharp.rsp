@@ -348,7 +348,6 @@
 "Assets/Scripts/Bone.cs"
 "Assets/Scripts/BoneCast.cs"
 "Assets/Scripts/BoneDownController.cs"
-"Assets/Scripts/BoneSelection.cs"
 "Assets/Scripts/EnemyBoneCast.cs"
 "Assets/Scripts/FSM/Fsm.cs"
 "Assets/Scripts/FSM/FsmLogic.cs"
