@@ -16,19 +16,6 @@ public abstract class BoneCast : MonoBehaviour
     public List<int> dices = new List<int>();
     public int pokerCombination;
     
-    public async UnityTask ThrowBones()
-    {
-        ThrowBone();
-        
-        //Ждем пока все кости упадут до конца
-        while (BoneDownController.dicesDownCount != 5)
-            await UnityTask.Delay(1);
-        BoneDownController.dicesDownCount = 0;
-
-        AddBones();
-        CalcResult();
-    }
-    
     public async UnityTask ThrowBones(List<int> indexesChoceDices)
     {
         indexesChoceDices.Sort();
@@ -84,47 +71,11 @@ public abstract class BoneCast : MonoBehaviour
             dices.Add(bones[indexesChoceDices[i]].boneNum);
     }
     
-    
-    
-    
-    
-    
-    private void ThrowBone()
-    {
-        dices = new List<int>();
-        MoveToSpawnPoints();
-        RotateDices();
-    }
-
-    
-
     private void MoveToDefaultPoints()
     {
         for (int i = 0; i < 5; i++)
             bones[i].gameObject.transform.position = defaultPoints[i].position;
     }
-
-    private void MoveToSpawnPoints()
-    {
-        for (int i = 0; i < 5; i++)
-            bones[i].gameObject.transform.position = spawnPoints[i].position;
-    }
-
-    private void AddBones()
-    {
-        for (int i = 0; i < 5; i++)
-            dices.Add(bones[i].boneNum);
-    }
-
-    private void RotateDices()
-    {
-        for (int i = 0; i < 5; i++)
-            bones[i].Rotate();
-    }
-
-
-    
-    
     
     
     public static int CalculatePokerResult(List<int> diceResults)
