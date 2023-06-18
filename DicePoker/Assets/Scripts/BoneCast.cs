@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityTask = System.Threading.Tasks.Task;
 
 public abstract class BoneCast : MonoBehaviour
 {
@@ -13,27 +13,27 @@ public abstract class BoneCast : MonoBehaviour
     [SerializeField]
     internal List<Transform> defaultPoints = new List<Transform>();
 
-    private List<int> dice = new List<int>();
+    private List<int> dices = new List<int>();
     public PokerHand hand;
-
-    public void ThrowBones()
-    {
-        StartCoroutine(IBoneCast());
-    }
-
-    private IEnumerator IBoneCast()
+    
+    public async UnityTask ThrowBones()
     {
         ThrowBone();
-        yield return new WaitForSeconds(5);
+        
+        //Ждем пока все кости упадут до конца
+        while (BoneDownController.dicesDownCount != 5)
+            await UnityTask.Delay(1);
+        BoneDownController.dicesDownCount = 0;
+
         AddBones();
         CalcResult();
     }
 
     private void ThrowBone()
     {
-        dice = new List<int>();
+        dices = new List<int>();
         MoveToSpawnPoints();
-        Rotate();
+        RotateDices();
     }
 
     private void CalcResult()
@@ -41,7 +41,6 @@ public abstract class BoneCast : MonoBehaviour
         hand = CalculatePokerHand();
         MoveToDefaultPoints();
     }
-
 
     private void MoveToDefaultPoints()
     {
@@ -58,10 +57,10 @@ public abstract class BoneCast : MonoBehaviour
     private void AddBones()
     {
         for (int i = 0; i < 5; i++)
-            dice.Add(bones[i].boneNum);
+            dices.Add(bones[i].boneNum);
     }
 
-    private void Rotate()
+    private void RotateDices()
     {
         for (int i = 0; i < 5; i++)
             bones[i].Rotate();
@@ -70,7 +69,7 @@ public abstract class BoneCast : MonoBehaviour
 
     public PokerHand CalculatePokerHand()
     {
-        var groupedDice = dice.GroupBy(d => d);
+        var groupedDice = dices.GroupBy(d => d);
         var counts = groupedDice.Select(g => g.Count()).ToList();
         counts.Sort();
 

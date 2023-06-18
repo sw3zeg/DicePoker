@@ -1,34 +1,35 @@
-using System.Collections;
 using UnityEngine;
+using UnityTask = System.Threading.Tasks.Task;
 
 public class Bone : MonoBehaviour
 {
     public int boneNum { get; set; }
-    private System.Random rand = new System.Random();
+    private Rigidbody rb;
+    
 
     private void Awake()
     {
-        Physics.gravity *= 1.3f;
+        Physics.gravity *= 1.2f;
+        rb = GetComponent<Rigidbody>();
     }
 
-    public void Rotate()
+    public async UnityTask Rotate()
     {
-        StartCoroutine(Rotation());
+        EnableColliders();
+        transform.rotation = Quaternion.identity;
+        rb.AddForce(-transform.up * 5000);
+        rb.AddTorque(Random.Range(-50000000,50000000),Random.Range(-50000000,50000000),Random.Range(-50000000,50000000));
     }
-
-    private IEnumerator Rotation()
+    
+    public void DesableColliders()
     {
-        transform.Rotate(new Vector3(rand.Next(3) * 90, rand.Next(3) * 90, rand.Next(3) * 90));
-
-        float elepsedTiem = 0;
-
-        while (elepsedTiem < 1.7f)
-        {
-            transform.Rotate(rand.Next(3)/1, rand.Next(3) / 1, rand.Next(3) / 1);
-            elepsedTiem += Time.deltaTime;
-            yield return null;
-        }
-        yield break;
+        for (int i = 1; i < 7; i++)
+            transform.GetChild(i).gameObject.SetActive(false);
     }
-
+    
+    public void EnableColliders()
+    {
+        for (int i = 1; i < 7; i++)
+            transform.GetChild(i).gameObject.SetActive(true);
+    }
 }

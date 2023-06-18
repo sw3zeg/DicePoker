@@ -1,9 +1,9 @@
 public class FsmState_InGame : FsmState
 {
-    InGameLogic inGameLogic;
+    private InGameLogic inGameLogic;
     public FsmState_InGame(Fsm fsm, InGameLogic igl) : base(fsm)
     {
-        this.inGameLogic = igl;
+        inGameLogic = igl;
     }
 
     public override void Enter()

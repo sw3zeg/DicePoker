@@ -1,5 +1,6 @@
-using System.Collections;
+using System;
 using UnityEngine;
+using UnityTask = System.Threading.Tasks.Task;
 
 public class InGameLogic : MonoBehaviour
 {
@@ -7,18 +8,15 @@ public class InGameLogic : MonoBehaviour
     PlayerBoneCast player;
     [SerializeField]
     EnemyBoneCast enemy;
-
-    public void ThrowBones(Fsm fsm)
+    
+    public async UnityTask ThrowBones(Fsm fsm)
     {
-        StartCoroutine(Cast(fsm));
-    }
-
-    private IEnumerator Cast(Fsm fsm)
-    {
-        player.ThrowBones();
-        yield return new WaitForSeconds(5);
-        enemy.ThrowBones();
-        yield return new WaitForSeconds(5);
+        await UnityTask.Delay(TimeSpan.FromSeconds(1));
+        await player.ThrowBones();
+        await UnityTask.Delay(TimeSpan.FromSeconds(1.5));
+        await enemy.ThrowBones();
+        await UnityTask.Delay(TimeSpan.FromSeconds(1));
         fsm.NextState();
     }
+    
 }
