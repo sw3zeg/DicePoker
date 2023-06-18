@@ -13,12 +13,12 @@ namespace FSM
         
         public override void Enter()
         {
-            Debug.Log("NextState");
+            rerolChoseLogic.EnableMenu();
         }
 
         public override void Exit()
         {
-            Debug.Log("nextState2");
+            rerolChoseLogic.DesableMenu();
         }
     }
 }

@@ -4,40 +4,32 @@ using System.Collections.Generic;
 public class Fsm
 {
     private FsmState currentState;
-    private int currentStateIndex = -1;
-    private Dictionary<int, FsmState> states = new Dictionary<int, FsmState>();
+    private string currentStateName;
+    private Dictionary<string, FsmState> states = new Dictionary<string, FsmState>();
 
-    public void Initialize()
+    public void Initialize(string stateName)
     {
-        SetState(0);
+        SetState(stateName);
     }
 
-    public void AddState(FsmState state)
+    public void AddState(string stateName,FsmState state)
     {
         if (states.ContainsValue(state) == false)
-            states.Add(states.Count, state);
+            states.Add(stateName, state);
         else
             throw new Exception("Invalid state exception");
     }
 
-    public void NextState()
+    public void SetState(string stateName)
     {
-        if (states.Count <= 1)
-            return;
-        int nextStateIndex = (currentStateIndex + 1) % states.Count;
-        SetState(nextStateIndex);
-    }
-
-    private void SetState(int stateIndex)
-    {
-        if (stateIndex == currentStateIndex)
+        if (stateName == currentStateName)
             return;
 
-        if (states.TryGetValue(stateIndex, out FsmState newState))
+        if (states.TryGetValue(stateName, out FsmState newState))
         {
             currentState?.Exit();
             currentState = newState;
-            currentStateIndex = stateIndex;
+            currentStateName = stateName;
             currentState?.Enter();
         }
         else

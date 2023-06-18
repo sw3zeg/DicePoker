@@ -28,7 +28,67 @@ public abstract class BoneCast : MonoBehaviour
         AddBones();
         CalcResult();
     }
+    
+    public async UnityTask ThrowBones(List<int> indexesChoceDices)
+    {
+        indexesChoceDices.Sort();
+        ThrowBone(indexesChoceDices);
+        
+        //Ждем пока все кости упадут до конца
+        while (BoneDownController.dicesDownCount != indexesChoceDices.Count)
+        {
+            await UnityTask.Delay(1);
+        }
+        BoneDownController.dicesDownCount = 0;
+        
+        AddBones(indexesChoceDices);
 
+        CalcResult();
+    }
+    
+    
+    private void CalcResult()
+    {
+        hand = CalculatePokerHand();
+        MoveToDefaultPoints();
+    }
+
+    private void ThrowBone(List<int> indexesChoceDices)
+    {
+        for (int i = indexesChoceDices.Count - 1; i >= 0; i--)
+        {
+            int indexToRemove = indexesChoceDices[i];
+            if (indexToRemove < dices.Count)
+                dices.RemoveAt(indexToRemove);
+        }
+        
+        MoveToSpawnPoints(indexesChoceDices);
+        RotateDices(indexesChoceDices);
+    }
+    
+    private void MoveToSpawnPoints(List<int> indexesChoceDices)
+    {
+        for (int i = 0; i < indexesChoceDices.Count; i++)
+            bones[indexesChoceDices[i]].gameObject.transform.position = spawnPoints[indexesChoceDices[i]].position;
+    }
+    
+    private void RotateDices(List<int> indexesChoceDices)
+    {
+        for (int i = 0; i < indexesChoceDices.Count; i++)
+            bones[indexesChoceDices[i]].Rotate();
+    }
+    
+    private void AddBones(List<int> indexesChoceDices)
+    {
+        for (int i = 0; i < indexesChoceDices.Count; i++)
+            dices.Add(bones[indexesChoceDices[i]].boneNum);
+    }
+    
+    
+    
+    
+    
+    
     private void ThrowBone()
     {
         dices = new List<int>();
@@ -36,11 +96,7 @@ public abstract class BoneCast : MonoBehaviour
         RotateDices();
     }
 
-    private void CalcResult()
-    {
-        hand = CalculatePokerHand();
-        MoveToDefaultPoints();
-    }
+    
 
     private void MoveToDefaultPoints()
     {

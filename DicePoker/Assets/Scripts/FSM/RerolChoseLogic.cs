@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FSM
@@ -5,25 +6,20 @@ namespace FSM
     public class RerolChoseLogic : MonoBehaviour
     {
         [SerializeField] private GameObject menu;
+        [SerializeField] private List<Selection> selections = new List<Selection>();
         
         public void EnableMenu()
         {
             menu.gameObject.SetActive(true);
+            foreach (Selection selection in selections)
+                selection.EnableChoceMode();
         }
 
         public void DesableMenu()
         {
             menu.gameObject.SetActive(false);
-        }
-
-        public void _RerollChoceDices()
-        {
-            
-        }
-
-        public void _SkipReroll()
-        {
-            
+            foreach (Selection selection in selections)
+                selection.DesableChoceMode();
         }
     }
 }

@@ -16,7 +16,7 @@ public class InGameLogic : MonoBehaviour
         await UnityTask.Delay(TimeSpan.FromSeconds(1.5));
         await enemy.ThrowBones();
         await UnityTask.Delay(TimeSpan.FromSeconds(1));
-        fsm.NextState();
+        fsm.SetState("RerollChoce");
     }
     
 }

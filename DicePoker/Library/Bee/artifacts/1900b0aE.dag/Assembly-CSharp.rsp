@@ -354,14 +354,17 @@
 "Assets/Scripts/FSM/FsmState.cs"
 "Assets/Scripts/FSM/FsmState_InGame.cs"
 "Assets/Scripts/FSM/FsmState_RerolChose.cs"
+"Assets/Scripts/FSM/FsmState_Reroll.cs"
 "Assets/Scripts/FSM/FsmState_ResultsMenu.cs"
 "Assets/Scripts/FSM/FsmState_StartMenu.cs"
 "Assets/Scripts/FSM/InGameLogic.cs"
 "Assets/Scripts/FSM/RerolChoseLogic.cs"
+"Assets/Scripts/FSM/RerollLogic.cs"
 "Assets/Scripts/FSM/ResultsMenuLogic.cs"
 "Assets/Scripts/FSM/StartMenuLogic.cs"
 "Assets/Scripts/PlayerBoneCast.cs"
 "Assets/Scripts/Selection/Selection.cs"
+"Assets/Scripts/Selection/SelectionController.cs"
 -langversion:9.0
 
 /deterministic
