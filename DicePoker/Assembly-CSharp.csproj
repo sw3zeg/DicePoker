@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\Selection\SelectionController.cs" />
      <Compile Include="Assets\Scripts\EnemyBoneCast.cs" />
      <Compile Include="Assets\Scripts\FSM\FsmState_StartMenu.cs" />
+     <Compile Include="Assets\Scripts\Sound\Sound.cs" />
      <Compile Include="Assets\Scripts\Bone.cs" />
      <Compile Include="Assets\Scripts\FSM\FsmState_InGame.cs" />
      <Compile Include="Assets\Scripts\FSM\FsmState_Reroll.cs" />
@@ -74,6 +75,7 @@
      <Folder Include="Assets\TextMesh Pro\Resources" />
      <Folder Include="Assets\Prefabs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <Folder Include="Assets\Scripts\Sound" />
      <Folder Include="Assets\TextMesh Pro" />
      <Folder Include="Assets\Scripts\Selection" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
@@ -100,6 +102,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne.json" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
+     <Folder Include="Assets\MP3" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.19f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

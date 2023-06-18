@@ -365,6 +365,7 @@
 "Assets/Scripts/PlayerBoneCast.cs"
 "Assets/Scripts/Selection/Selection.cs"
 "Assets/Scripts/Selection/SelectionController.cs"
+"Assets/Scripts/Sound/Sound.cs"
 -langversion:9.0
 
 /deterministic
