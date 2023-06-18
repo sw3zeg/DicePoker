@@ -16,7 +16,7 @@ public class ResultsMenuLogic : MonoBehaviour
     public void EnableMenu()
     {
         menu.gameObject.SetActive(true);
-        resultTxt.text = DetermineWinner(player.hand, enemy.hand);
+        resultTxt.text = DetermineWinner(player.pokerCombination, enemy.pokerCombination);
     }
 
     public void DesableMenu()
@@ -24,19 +24,13 @@ public class ResultsMenuLogic : MonoBehaviour
         menu.gameObject.SetActive(false);
     }
 
-    public static string DetermineWinner(PokerHand hand1, PokerHand hand2)
+    public string DetermineWinner(int player, int enemy)
     {
-        if (hand1 > hand2)
-        {
-            return "You win!!";
-        }
-        else if (hand2 > hand1)
-        {
-            return "You lose";
-        }
+        if (player > enemy)
+            return "You win!! :D";
+        else if (player < enemy)
+            return "You lose :(";
         else
-        {
-            return "Ничья";
-        }
+            return "Paritet";
     }
 }

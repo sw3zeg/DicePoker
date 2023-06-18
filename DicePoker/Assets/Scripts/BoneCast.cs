@@ -13,8 +13,8 @@ public abstract class BoneCast : MonoBehaviour
     [SerializeField]
     internal List<Transform> defaultPoints = new List<Transform>();
 
-    private List<int> dices = new List<int>();
-    public PokerHand hand;
+    public List<int> dices = new List<int>();
+    public int pokerCombination;
     
     public async UnityTask ThrowBones()
     {
@@ -49,7 +49,7 @@ public abstract class BoneCast : MonoBehaviour
     
     private void CalcResult()
     {
-        hand = CalculatePokerHand();
+        pokerCombination = CalculatePokerResult(dices);
         MoveToDefaultPoints();
     }
 
@@ -123,52 +123,115 @@ public abstract class BoneCast : MonoBehaviour
     }
 
 
-    public PokerHand CalculatePokerHand()
+    
+    
+    
+    
+    public static int CalculatePokerResult(List<int> diceResults)
     {
-        var groupedDice = dices.GroupBy(d => d);
-        var counts = groupedDice.Select(g => g.Count()).ToList();
-        counts.Sort();
-
-        if (counts.SequenceEqual(new List<int> { 1, 1, 1, 1, 1 }))
+        if (diceResults.Count != 5)
         {
-            return PokerHand.None;
-        }
-        else if (counts.SequenceEqual(new List<int> { 1, 1, 1, 2 }))
-        {
-            return PokerHand.OnePair;
-        }
-        else if (counts.SequenceEqual(new List<int> { 1, 2, 2 }))
-        {
-            return PokerHand.TwoPairs;
-        }
-        else if (counts.SequenceEqual(new List<int> { 1, 1, 3 }))
-        {
-            return PokerHand.ThreeOfAKind;
-        }
-        else if (counts.SequenceEqual(new List<int> { 2, 3 }))
-        {
-            return PokerHand.FullHouse;
-        }
-        else if (counts.SequenceEqual(new List<int> { 1, 4 }))
-        {
-            return PokerHand.FourOfAKind;
-        }
-        else if (counts.SequenceEqual(new List<int> { 5 }))
-        {
-            return PokerHand.FiveOfAKind;
+            throw new ArgumentException("Список должен содержать 5 элементов");
         }
 
-        throw new ArgumentException("Invalid dice combination.");
+        // Сортируем результаты бросков
+        diceResults.Sort();
+
+        // Проверяем наличие комбинаций покера
+        if (IsRoyalFlush(diceResults))
+        {
+            return 100; // Роял флэш
+        }
+        else if (IsStraightFlush(diceResults))
+        {
+            return 90; // Стрит флэш
+        }
+        else if (IsFourOfAKind(diceResults))
+        {
+            return 80; // Каре
+        }
+        else if (IsFullHouse(diceResults))
+        {
+            return 70; // Фулл хаус
+        }
+        else if (IsFlush(diceResults))
+        {
+            return 60; // Флэш
+        }
+        else if (IsStraight(diceResults))
+        {
+            return 50; // Стрит
+        }
+        else if (IsThreeOfAKind(diceResults))
+        {
+            return 40; // Тройка
+        }
+        else if (IsTwoPair(diceResults))
+        {
+            return 30; // Две пары
+        }
+        else if (IsOnePair(diceResults))
+        {
+            return 20; // Одна пара
+        }
+        else
+        {
+            return 10; // Ничего из вышеперечисленного
+        }
     }
 
-    public enum PokerHand
+    // Методы проверки комбинаций покера
+
+    private static bool IsRoyalFlush(List<int> diceResults)
     {
-        None,
-        OnePair,
-        TwoPairs,
-        ThreeOfAKind,
-        FullHouse,
-        FourOfAKind,
-        FiveOfAKind
+        return diceResults.SequenceEqual(new List<int> { 1, 10, 11, 12, 13 });
+    }
+
+    private static bool IsStraightFlush(List<int> diceResults)
+    {
+        return IsStraight(diceResults) && IsFlush(diceResults);
+    }
+
+    private static bool IsFourOfAKind(List<int> diceResults)
+    {
+        return diceResults.GroupBy(x => x).Any(g => g.Count() == 4);
+    }
+
+    private static bool IsFullHouse(List<int> diceResults)
+    {
+        return diceResults.GroupBy(x => x).Select(g => g.Count()).OrderByDescending(x => x).SequenceEqual(new List<int> { 3, 2 });
+    }
+
+    private static bool IsFlush(List<int> diceResults)
+    {
+        return diceResults.Distinct().Count() == 1;
+    }
+
+    private static bool IsStraight(List<int> diceResults)
+    {
+        for (int i = 0; i < diceResults.Count - 1; i++)
+        {
+            if (diceResults[i] + 1 != diceResults[i + 1])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static bool IsThreeOfAKind(List<int> diceResults)
+    {
+        return diceResults.GroupBy(x => x).Any(g => g.Count() == 3);
+    }
+
+    private static bool IsTwoPair(List<int> diceResults)
+    {
+        return diceResults.GroupBy(x => x).Where(g => g.Count() == 2).Count() == 2;
+    }
+
+    private static bool IsOnePair(List<int> diceResults)
+    {
+        return diceResults.GroupBy(x => x).Any(g => g.Count() == 2);
     }
 }
