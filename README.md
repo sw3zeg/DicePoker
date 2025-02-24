@@ -1,5 +1,5 @@
 
-https://github.com/user-attachments/assets/12f8c604-ce35-4a53-80b8-4cb91af00bc7
+![trimmed_output](https://github.com/user-attachments/assets/04e9c932-eadb-4756-adbb-d81440e0fd58)
 
 
 ![изображение](https://github.com/user-attachments/assets/c3a05f56-ce82-4d8f-b297-8dfa9fbf5ea4)
